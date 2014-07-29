@@ -62,9 +62,9 @@ $ touch log.txt
 **Rails-app path**: Rails-app root (in this case, `/var/www/example`)  
 **root-user password**: this is used to restart Apache (`$ sudo service httpd restart`)  
 
-At lsat, GitHub WebHooks.  
-In your repositries, [Settings]→[Webhooks & Services]→[Add Webhook].  
-And set URL to send POST request. (in this case, `http://deploy.example.com`)  
+At last, you set GitHub WebHooks.  
+In your repositries, go to [Settings]→[Webhooks & Services]→[Add Webhook],
+and set URL to send POST request. (in this case, `http://deploy.example.com`)  
 
 That's all !
 
