@@ -4,13 +4,14 @@ require 'json'
 post '/' do
   log_file = File.open("log.txt", "w")
   json = JSON.parse(request.body.read) 
-  if json["ref"] == "refs/heads/master" 
+  return if json["ref"] != "refs/heads/master"
+  begin
     deploy
     json["commits"].each do |commit|
       log_file.write("commit '"+commit["message"]+"' was deployed. @"+Time.now.to_s)
     end
-  else
-    log_file.write("error")
+  rescue
+    log_file.write("error! Master branch was not deployed successfully.")
   end
   log_file.close
 end
