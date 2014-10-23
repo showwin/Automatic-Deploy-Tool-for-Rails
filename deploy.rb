@@ -2,16 +2,17 @@ require 'sinatra'
 require 'json'
 
 post '/' do
-  log_file = File.open("log.txt", "w")
-  json = JSON.parse(request.body.read) 
-  return if json["ref"] != "refs/heads/master"
+  log_file = File.open("log.txt", "a")
+  log_file.write("\n")
+	log_file.write(Time.now.to_s+"\n")
+	log_file.write("received post request.\n")
+	json = JSON.parse(request.body.read)
+	return unless json["name"] == "showwin" && json["branch"] == "production"
   begin
     deploy
-    json["commits"].each do |commit|
-      log_file.write("commit '"+commit["message"]+"' was deployed. @"+Time.now.to_s)
-    end
+    log_file.write("successfully deployed.\n")
   rescue
-    log_file.write("error! Master branch was not deployed successfully.")
+    log_file.write("error! Master branch was not deployed successfully.\n")
   end
   log_file.close
 end
