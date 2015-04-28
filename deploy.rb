@@ -6,9 +6,9 @@ get '/' do
 end
 
 post '/' do
-  log_file = File.open('log.txt', 'w')
+  log_file = File.open('log.txt', 'a')
   json = JSON.parse(request.body.read)
-  return if json['ref'] != 'refs/heads/master'
+  return if json['branch'] != 'master'
   begin
     deploy
     json['commits'].each do |commit|
